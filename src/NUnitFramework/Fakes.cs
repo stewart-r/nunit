@@ -22,7 +22,9 @@
 // ***********************************************************************
 
 using System;
+using System.Reflection;
 using NUnit.Compatibility;
+using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Execution;
 
@@ -86,6 +88,14 @@ namespace NUnit.TestUtilities
         }
 
         #endregion
+
+        #region GetMethodInfo
+
+        public static FakeMethodInfo GetMethodInfo()
+        {
+            return new FakeMethodInfo();
+        }
+        #endregion
     }
 
     #region FakeTestMethod Class
@@ -126,6 +136,64 @@ namespace NUnit.TestUtilities
         }
 
         protected override void PerformWork() { }
+    }
+
+    #endregion
+
+    #region FakeMethodInfo Class
+
+    /// <summary>
+    /// FakeMethodInfo is used in tests to simulate an implementation if IMethodInfo
+    /// </summary>
+    public class FakeMethodInfo : IMethodInfo
+    {
+        public ITypeInfo TypeInfo { get; set; }
+
+        public MethodInfo MethodInfo { get; set; }
+
+        public string Name { get; set; }
+
+        public bool IsAbstract { get; set; }
+
+        public bool IsPublic { get; set; }
+
+        public bool ContainsGenericParameters { get; set; }
+
+        public bool IsGenericMethod { get; set; }
+
+        public bool IsGenericMethodDefinition { get; set; }
+
+        public ITypeInfo ReturnType { get; set; }
+
+        public T[] GetCustomAttributes<T>(bool inherit) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Type[] GetGenericArguments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IParameterInfo[] GetParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Invoke(object fixture, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsDefined<T>(bool inherit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMethodInfo MakeGenericMethod(params Type[] typeArguments)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     #endregion

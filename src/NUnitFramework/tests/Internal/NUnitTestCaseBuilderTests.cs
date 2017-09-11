@@ -22,7 +22,9 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal.Builders;
 using NUnit.TestData;
 using NUnit.TestUtilities;
 
@@ -78,6 +80,23 @@ namespace NUnit.Framework.Internal
             var suite = TestBuilder.MakeParameterizedMethodSuite(optionalTestParametersFixtureType, methodName);
             var testCase = (Test)suite.Tests[0];
             Assert.That(testCase.RunState, Is.EqualTo(expectedState));
+        }
+
+        private static IEnumerable<TestCaseParameters> BuildTestMethodTestsData()
+        {
+            yield return new TestCaseData(new TestCaseData().SetName("Simple String")).Returns("Simple String");
+        }
+        
+        [TestCaseSource(nameof(BuildTestMethodTestsData))]
+        public string BuildTestMethodTests(TestCaseParameters testCaseParams)
+        {
+            var testCaseBuilder = new NUnitTestCaseBuilder();
+            var mockMethodInfo = Fakes.GetMethodInfo();
+            var mockTest = Fakes.GetTestMethod(null,"");
+
+            return testCaseBuilder
+                        .BuildTestMethod(mockMethodInfo,mockTest,testCaseParams)
+                        .Name;
         }
     }
 }
