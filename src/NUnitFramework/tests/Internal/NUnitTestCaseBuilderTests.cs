@@ -85,6 +85,7 @@ namespace NUnit.Framework.Internal
         private static IEnumerable<TestCaseParameters> BuildTestMethodTestsData()
         {
             yield return new TestCaseData(new TestCaseData().SetName("Simple String")).Returns("Simple String");
+            yield return new TestCaseData(new TestCaseData().SetName("Escaped Special Char {m}")).Returns("Simple String");
         }
         
         [TestCaseSource(nameof(BuildTestMethodTestsData))]
@@ -92,11 +93,11 @@ namespace NUnit.Framework.Internal
         {
             var testCaseBuilder = new NUnitTestCaseBuilder();
             var mockMethodInfo = Fakes.GetMethodInfo();
-            var mockTest = Fakes.GetTestMethod(null,"");
-
+            
             return testCaseBuilder
-                        .BuildTestMethod(mockMethodInfo,mockTest,testCaseParams)
-                        .Name;
+                      .BuildTestMethod(mockMethodInfo,null,testCaseParams)
+                      .Name;
+            
         }
     }
 }

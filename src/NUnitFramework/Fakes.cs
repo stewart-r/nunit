@@ -93,7 +93,20 @@ namespace NUnit.TestUtilities
 
         public static FakeMethodInfo GetMethodInfo()
         {
-            return new FakeMethodInfo();
+            var ret = new FakeMethodInfo();
+            ret.TypeInfo = GetTypeInfo();
+            (ret.TypeInfo as FakeTypeInfo).FullName = "FakeTypeInfo";
+            ret.Name = "FakeMethodInfo";
+
+            return ret;
+        }
+        #endregion
+
+        #region GetTypeInfo
+
+        public static FakeTypeInfo GetTypeInfo()
+        {
+            return new FakeTypeInfo();
         }
         #endregion
     }
@@ -196,5 +209,94 @@ namespace NUnit.TestUtilities
         }
     }
 
+    #endregion
+
+    #region FakeTypeInfo Class
+    public class FakeTypeInfo : ITypeInfo
+    {
+        public Type Type { get; set; }
+
+        public ITypeInfo BaseType { get; set; }
+
+        public string Name { get; set; }
+
+        public string FullName { get; set; }
+
+        public Assembly Assembly { get; set; }
+
+        public string Namespace { get; set; }
+
+        public bool IsAbstract { get; set; }
+
+        public bool IsGenericType { get; set; }
+
+        public bool ContainsGenericParameters { get; set; }
+
+        public bool IsGenericTypeDefinition { get; set; }
+
+        public bool IsSealed { get; set; }
+
+        public bool IsStaticClass { get; set; }
+
+        public object Construct(object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ConstructorInfo GetConstructor(Type[] argTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T[] GetCustomAttributes<T>(bool inherit) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDisplayName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDisplayName(object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Type GetGenericTypeDefinition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMethodInfo[] GetMethods(BF flags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasConstructor(Type[] argTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasMethodWithAttribute(Type attrType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsDefined<T>(bool inherit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsType(Type type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITypeInfo MakeGenericType(Type[] typeArgs)
+        {
+            throw new NotImplementedException();
+        }
+    }
     #endregion
 }
